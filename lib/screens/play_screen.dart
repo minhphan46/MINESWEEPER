@@ -34,7 +34,7 @@ class _PlayScreenState extends State<PlayScreen> {
     //matrix.initSquare();
     //matrix.display();
     super.initState();
-    //scanBombs();
+    matrix.scanBombs();
   }
 
   void restartGame() {
@@ -83,8 +83,8 @@ class _PlayScreenState extends State<PlayScreen> {
       if (bombLocation.contains(i - 1) && i % numOfEachRow != 0)
         numberOfBombsAround++;
 
-      // check square to the top left, unless it is in the first column or first row
-      if (bombLocation.contains(i - 1 - numOfEachRow) &&
+      // check square to the top left, unless it is in the first col or first row
+      if (bombLocation.contains(i - 1 - numOfumnEachRow) &&
           i % numOfEachRow != 0 &&
           i >= numOfEachRow) numberOfBombsAround++;
       // check square to the top, unless it is in the first row
