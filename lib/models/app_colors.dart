@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   AppColors._();
-  static const MaterialColor primaryColor = Colors.grey;
-  static Color? BackroundColor = Colors.grey[200];
-  static Color? appbarColor = Colors.grey[200];
-  static Color? hideBoxColor = Colors.grey[400];
+  static const MaterialColor primaryColor = Colors.blue;
+  static Color? BackroundColor = Color(0xff56ab91);
+  static Color? appbarColor = BackroundColor;
+  static Color? hideBoxColor = Color(0xff248277);
   static Color? showBoxColor = Colors.grey[300];
-  static Color? bombColor = Colors.redAccent[100];
-  static Color? backroundButtonColor = Colors.grey[700];
+  static Color? bombColor = Color(0xff111d13);
+  static Color? backroundButtonColor = Color(0xff036666);
   static Color? IconColor = Colors.white;
-  static Color? IconButtonColor = Colors.grey[600];
-  static Color? diaLogBackroundColor = Colors.grey[800];
+  static Color? IconButtonColor = Color(0xff036666);
+  static Color? diaLogBackroundColor = Color(0xff14746f);
 }
