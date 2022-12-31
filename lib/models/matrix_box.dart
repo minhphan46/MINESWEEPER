@@ -1,24 +1,23 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class MatrixBox {
   // variables
   int numOfEachRow = 9;
   late int numOfSquares;
+  int numberOfBoms = 6;
   // [number of bombs around, reverled = true / false]
   List squares = []; // list of squares
 
   List get Squares => squares;
   List get BombLocations => bombLocations;
   // list location of the bombs
-  final List<List<int>> bombLocations = [
-    [0, 1],
-    [4, 0],
-    [9, 9],
-  ];
+  final List<List<int>> bombLocations = [];
   // revereal the bomb, if click the bomb, this true
   bool bombsRevealed = false;
 
-  MatrixBox({required this.numOfEachRow}) {
+  MatrixBox({required this.numOfEachRow, required this.numberOfBoms}) {
     numOfSquares = numOfEachRow * numOfEachRow;
     squares = List.generate(
       numOfEachRow,
@@ -31,16 +30,31 @@ class MatrixBox {
     );
   }
 
-  void initSquare() {}
+  void initSquare() {
+    resetSquares();
+  }
 
   void resetSquares() {
     bombsRevealed = false;
+    randomBomb();
     for (int i = 0; i < numOfEachRow; i++) {
       for (int j = 0; j < numOfEachRow; j++) {
         squares[i][j] = [0, false];
       }
     }
     scanBombs();
+  }
+
+  void randomBomb() {
+    bombLocations.clear();
+    for (int i = 0; i < numberOfBoms; i++) {
+      int row = Random().nextInt(numOfEachRow);
+      int col = Random().nextInt(numOfEachRow);
+      if (!isBomb(row, col)) {
+        bombLocations.add([row, col]);
+      } else
+        i--;
+    }
   }
 
   void display() {

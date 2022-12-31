@@ -13,7 +13,7 @@ class PlayScreen extends StatefulWidget {
 
 class _PlayScreenState extends State<PlayScreen> {
   // matrix of squares
-  MatrixBox matrix = MatrixBox(numOfEachRow: 10);
+  MatrixBox matrix = MatrixBox(numOfEachRow: 10, numberOfBoms: 7);
   @override
   void initState() {
     matrix.resetSquares();
@@ -98,26 +98,26 @@ class _PlayScreenState extends State<PlayScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      '6',
+                      matrix.BombLocations.length.toString(),
                       style: TextStyle(fontSize: 40),
                     ),
-                    Text('B O M B'),
+                    const Text('B O M B'),
                   ],
                 ),
 
                 // BUTTON to refresh the game
                 Card(
-                  child: Icon(
+                  color: Colors.grey[700],
+                  child: const Icon(
                     Icons.refresh,
                     color: Colors.white,
                     size: 40,
                   ),
-                  color: Colors.grey[700],
                 ),
                 // display time taken
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                  children: const [
                     Text(
                       '0',
                       style: TextStyle(fontSize: 40),
@@ -165,8 +165,15 @@ class _PlayScreenState extends State<PlayScreen> {
                 }
               },
             ),
-          )
+          ),
           // branding
+          const Padding(
+            padding: const EdgeInsets.only(bottom: 20),
+            child: Text(
+              "CREATED BY VAN MINH",
+              style: TextStyle(fontSize: 15),
+            ),
+          ),
         ],
       ),
     );
