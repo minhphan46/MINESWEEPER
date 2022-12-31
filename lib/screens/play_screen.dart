@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:minesweeper/models/app_colors.dart';
 import 'package:minesweeper/models/matrix_box.dart';
