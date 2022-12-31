@@ -32,7 +32,7 @@ class _PlayScreenState extends State<PlayScreen> {
   }
 
   // matrix of squares
-  MatrixBox matrix = MatrixBox(numOfRow: 15, numOfCol: 10, numberOfBoms: 10);
+  MatrixBox matrix = MatrixBox(numOfRow: 16, numOfCol: 10, numberOfBoms: 10);
   @override
   void initState() {
     matrix.resetSquares();
@@ -63,12 +63,15 @@ class _PlayScreenState extends State<PlayScreen> {
           )),
           actions: [
             MaterialButton(
-              color: Colors.grey,
+              color: AppColors.backroundButtonColor,
               onPressed: () {
                 restartGame();
                 Navigator.of(context).pop();
               },
-              child: const Icon(Icons.refresh),
+              child: Icon(
+                Icons.refresh,
+                color: AppColors.IconColor,
+              ),
             )
           ],
         );
@@ -109,12 +112,15 @@ class _PlayScreenState extends State<PlayScreen> {
             ),
             actions: [
               MaterialButton(
-                color: Colors.grey,
+                color: AppColors.backroundButtonColor,
                 onPressed: () {
                   restartGame();
                   Navigator.of(context).pop();
                 },
-                child: const Icon(Icons.refresh),
+                child: Icon(
+                  Icons.refresh,
+                  color: AppColors.IconColor,
+                ),
               )
             ],
           );

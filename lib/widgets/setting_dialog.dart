@@ -118,12 +118,15 @@ class _SettingDialogState extends State<SettingDialog> {
       ),
       actions: [
         MaterialButton(
-          color: Colors.grey,
+          color: AppColors.backroundButtonColor,
           onPressed: () {
             widget.createNewSquare(widget.cols, widget.bombs);
             Navigator.of(context).pop();
           },
-          child: const Icon(Icons.done),
+          child: Icon(
+            Icons.done,
+            color: AppColors.IconColor,
+          ),
         )
       ],
     );
