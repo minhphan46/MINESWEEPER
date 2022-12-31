@@ -17,7 +17,8 @@ class NumberBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String number = revealed ? child.toString() : '';
+    String number =
+        revealed ? (child.toString() == '0' ? '' : child.toString()) : '';
     Color color = GetColor(child);
 
     return GestureDetector(
