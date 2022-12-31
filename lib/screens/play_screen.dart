@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:minesweeper/models/app_colors.dart';
+import 'package:minesweeper/models/matrix_box.dart';
 import 'package:minesweeper/widgets/bomb.dart';
 import 'package:minesweeper/widgets/number_box_widget.dart';
 
@@ -13,6 +15,7 @@ class _PlayScreenState extends State<PlayScreen> {
   // variables
   static int numOfEachRow = 9;
   int numOfSquares = numOfEachRow * numOfEachRow;
+  MatrixBox matrix = MatrixBox(numOfEachRow: 10);
   // [number of bombs around, reverled = true / false]
   var squareStatus = [];
   final List<int> bombLocation = [
@@ -25,11 +28,13 @@ class _PlayScreenState extends State<PlayScreen> {
   @override
   void initState() {
     // initially, each square has 0 bombs around, and is not revealed
-    for (int i = 0; i < numOfSquares; i++) {
-      squareStatus.add([0, false]);
-    }
+    // for (int i = 0; i < numOfSquares; i++) {
+    //   squareStatus.add([0, false]);
+    // }
+    //matrix.initSquare();
+    //matrix.display();
     super.initState();
-    scanBombs();
+    //scanBombs();
   }
 
   void restartGame() {
@@ -45,7 +50,7 @@ class _PlayScreenState extends State<PlayScreen> {
     // reveal current box if it is a number: 1,2,3 ...
     if (squareStatus[index][0] != 0) {
       setState(() {
-        squareStatus[index][1] = true;
+        squareStatus[index][0] = true;
       });
     }
     // if current box is 0
@@ -154,13 +159,13 @@ class _PlayScreenState extends State<PlayScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: AppColors.BackroundColor,
       body: Column(
         children: [
           // game stats and menu
           Container(
             height: 150,
-            color: Colors.grey,
+            color: AppColors.appbarColor,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -203,13 +208,15 @@ class _PlayScreenState extends State<PlayScreen> {
           Expanded(
             child: GridView.builder(
               physics: NeverScrollableScrollPhysics(),
-              itemCount: numOfSquares,
+              itemCount: matrix.numOfSquares,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: numOfEachRow),
+                  crossAxisCount: matrix.numOfEachRow),
               itemBuilder: (context, index) {
-                if (bombLocation.contains(index)) {
+                int row = (index / matrix.numOfEachRow).toInt();
+                int col = index % matrix.numOfEachRow;
+                if (matrix.isBomb(row, col)) {
                   return Bomb(
-                    revealed: bombsRevealed,
+                    revealed: true,
                     function: () {
                       // player tapped the bomb, so player loses
                       setState(() {
@@ -220,12 +227,15 @@ class _PlayScreenState extends State<PlayScreen> {
                   );
                 } else {
                   return NumberBox(
-                    child: squareStatus[index][0],
-                    revealed: squareStatus[index][1],
+                    child: matrix.Squares[row][col][0],
+                    revealed: matrix.squares[row][col][1],
                     function: () {
                       // revearl current box
-                      revealBoxNumbers(index);
-                      checkWinner();
+                      setState(() {
+                        matrix.revealBoxNumbers(row, col);
+                      });
+                      //revealBoxNumbers(index);
+                      //checkWinner();
                     },
                   );
                 }
