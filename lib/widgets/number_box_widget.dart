@@ -31,7 +31,7 @@ class NumberBox extends StatelessWidget {
           child: Center(
             child: Text(
               number,
-              style: TextStyle(color: color),
+              style: TextStyle(color: color, fontSize: 18),
             ),
           ),
         ),

@@ -7,7 +7,7 @@ class AppColors {
   static Color? appbarColor = BackroundColor;
   static Color? hideBoxColor = Color(0xff248277);
   static Color? showBoxColor = Colors.grey[300];
-  static Color? bombColor = Color(0xff111d13);
+  static Color? bombColor = Color(0xffbc4749);
   static Color? backroundButtonColor = Color(0xff036666);
   static Color? IconColor = Colors.white;
   static Color? IconButtonColor = Color(0xff036666);
