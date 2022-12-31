@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:minesweeper/models/app_colors.dart';
 
 class NumberBox extends StatelessWidget {
   final child;
@@ -26,7 +27,7 @@ class NumberBox extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(2.0),
         child: Container(
-          color: revealed ? Colors.grey[300] : Colors.grey[400],
+          color: revealed ? AppColors.showBoxColor : AppColors.hideBoxColor,
           child: Center(
             child: Text(
               number,
