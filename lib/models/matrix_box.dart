@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 
 class MatrixBox {
   // variables
-  int numOfEachRow = 9;
+  int numOfRow = 9;
+  int numOfCol = 9;
   late int numOfSquares;
   int numberOfBoms = 6;
   // [number of bombs around, reverled = true / false]
@@ -17,12 +18,15 @@ class MatrixBox {
   // revereal the bomb, if click the bomb, this true
   bool bombsRevealed = false;
 
-  MatrixBox({required this.numOfEachRow, required this.numberOfBoms}) {
-    numOfSquares = numOfEachRow * numOfEachRow;
+  MatrixBox(
+      {required this.numOfRow,
+      required this.numOfCol,
+      required this.numberOfBoms}) {
+    numOfSquares = numOfRow * numOfCol;
     squares = List.generate(
-      numOfEachRow,
+      numOfRow,
       (i) => List.generate(
-        numOfEachRow,
+        numOfCol,
         (j) => [0, false],
         growable: false,
       ),
@@ -37,8 +41,8 @@ class MatrixBox {
   void resetSquares() {
     bombsRevealed = false;
     randomBomb();
-    for (int i = 0; i < numOfEachRow; i++) {
-      for (int j = 0; j < numOfEachRow; j++) {
+    for (int i = 0; i < numOfRow; i++) {
+      for (int j = 0; j < numOfCol; j++) {
         squares[i][j] = [0, false];
       }
     }
@@ -48,8 +52,8 @@ class MatrixBox {
   void randomBomb() {
     bombLocations.clear();
     for (int i = 0; i < numberOfBoms; i++) {
-      int row = Random().nextInt(numOfEachRow);
-      int col = Random().nextInt(numOfEachRow);
+      int row = Random().nextInt(numOfRow);
+      int col = Random().nextInt(numOfCol);
       if (!isBomb(row, col)) {
         bombLocations.add([row, col]);
       } else
@@ -58,8 +62,8 @@ class MatrixBox {
   }
 
   void display() {
-    for (int i = 0; i < numOfEachRow; i++) {
-      for (int j = 0; j < numOfEachRow; j++) {
+    for (int i = 0; i < numOfRow; i++) {
+      for (int j = 0; j < numOfCol; j++) {
         squares[i][j] = [0, false];
         print("moi o: ${squares[i][j][0]}");
       }
@@ -105,25 +109,25 @@ class MatrixBox {
         if (squares[row - 1][col][1] == false) revealBoxNumbers(row - 1, col);
       }
       // check top right, unless first col and last row
-      if (row != 0 && col != numOfEachRow - 1) {
+      if (row != 0 && col != numOfCol - 1) {
         if (squares[row - 1][col + 1][1] == false)
           revealBoxNumbers(row - 1, col + 1);
       }
       // check right, unless last row
-      if (col != numOfEachRow - 1) {
+      if (col != numOfCol - 1) {
         if (squares[row][col + 1][1] == false) revealBoxNumbers(row, col + 1);
       }
       // check bottom right, unless last col and last row
-      if (row != numOfEachRow - 1 && col != numOfEachRow - 1) {
+      if (row != numOfRow - 1 && col != numOfCol - 1) {
         if (squares[row + 1][col + 1][1] == false)
           revealBoxNumbers(row + 1, col + 1);
       }
       // check bottom, unless last row
-      if (row != numOfEachRow - 1) {
+      if (row != numOfRow - 1) {
         if (squares[row + 1][col][1] == false) revealBoxNumbers(row + 1, col);
       }
       // check bottom left, unless first col and last row
-      if (col != 0 && row != numOfEachRow - 1) {
+      if (col != 0 && row != numOfRow - 1) {
         if (squares[row + 1][col - 1][1] == false)
           revealBoxNumbers(row + 1, col - 1);
       }
@@ -131,8 +135,8 @@ class MatrixBox {
   }
 
   void scanBombs() {
-    for (int row = 0; row < numOfEachRow; row++) {
-      for (int col = 0; col < numOfEachRow; col++) {
+    for (int row = 0; row < numOfRow; row++) {
+      for (int col = 0; col < numOfCol; col++) {
         // get number of the bombs around
         int numberOfBombsAround = 0;
 
@@ -145,20 +149,18 @@ class MatrixBox {
         // check top, unless first row
         if (isBomb(row - 1, col) && row - 1 >= 0) numberOfBombsAround++;
         // check top right, unless first col and last row
-        if (isBomb(row - 1, col + 1) && row - 1 >= 0 && col + 1 < numOfEachRow)
+        if (isBomb(row - 1, col + 1) && row - 1 >= 0 && col + 1 < numOfRow)
           numberOfBombsAround++;
         // check right, unless last row
-        if (isBomb(row, col + 1) && col + 1 < numOfEachRow)
-          numberOfBombsAround++;
+        if (isBomb(row, col + 1) && col + 1 < numOfCol) numberOfBombsAround++;
         // check bottom right, unless last col and last row
         if (isBomb(row + 1, col + 1) &&
-            row + 1 < numOfEachRow &&
-            col + 1 < numOfEachRow) numberOfBombsAround++;
+            row + 1 < numOfRow &&
+            col + 1 < numOfCol) numberOfBombsAround++;
         // check bottom, unless last row
-        if (isBomb(row + 1, col) && row - 1 < numOfEachRow)
-          numberOfBombsAround++;
+        if (isBomb(row + 1, col) && row + 1 < numOfRow) numberOfBombsAround++;
         // check bottom left, unless first col and last row
-        if (isBomb(row + 1, col - 1) && row + 1 < numOfEachRow && col - 1 > 0)
+        if (isBomb(row + 1, col - 1) && row + 1 < numOfRow && col - 1 >= 0)
           numberOfBombsAround++;
 
         squares[row][col][0] = numberOfBombsAround;
@@ -169,8 +171,8 @@ class MatrixBox {
   bool checkWinner() {
     // check how many boxes yet to reveal
     int unrevealedBoxes = 0;
-    for (int i = 0; i < numOfEachRow; i++) {
-      for (int j = 0; j < numOfEachRow; j++) {
+    for (int i = 0; i < numOfRow; i++) {
+      for (int j = 0; j < numOfCol; j++) {
         if (squares[i][j][1] == false) unrevealedBoxes++;
       }
     }

@@ -14,7 +14,7 @@ class Bomb extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(2.0),
         child: Container(
-          color: revealed ? AppColors.bomBColor : AppColors.hideBoxColor,
+          color: revealed ? AppColors.bombColor : AppColors.hideBoxColor,
         ),
       ),
     );
