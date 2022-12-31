@@ -5,6 +5,7 @@ import 'package:minesweeper/models/app_colors.dart';
 import 'package:minesweeper/models/matrix_box.dart';
 import 'package:minesweeper/widgets/bomb.dart';
 import 'package:minesweeper/widgets/number_box_widget.dart';
+import 'package:minesweeper/widgets/setting_dialog.dart';
 
 class PlayScreen extends StatefulWidget {
   const PlayScreen({super.key});
@@ -32,7 +33,6 @@ class _PlayScreenState extends State<PlayScreen> {
 
   // matrix of squares
   MatrixBox matrix = MatrixBox(numOfRow: 15, numOfCol: 10, numberOfBoms: 10);
-
   @override
   void initState() {
     matrix.resetSquares();
@@ -55,7 +55,7 @@ class _PlayScreenState extends State<PlayScreen> {
       barrierDismissible: false,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: Colors.grey[700],
+          backgroundColor: AppColors.diaLogBackroundColor,
           title: const Center(
               child: Text(
             'YOU LOST!',
@@ -123,28 +123,26 @@ class _PlayScreenState extends State<PlayScreen> {
     }
   }
 
-  void setNumberOfBomb() {
+  void createNewSquare(int numofCols, int numOfBombs) {
+    double width = MediaQuery.of(context).size.width;
+    double heigth = MediaQuery.of(context).size.height -
+        160 -
+        MediaQuery.of(context).padding.top;
+    double sizeBox = width / numofCols;
+    int numOfRow = (heigth / sizeBox).toInt();
+    matrix = MatrixBox(
+      numOfRow: numOfRow,
+      numOfCol: numofCols,
+      numberOfBoms: numOfBombs,
+    );
+    restartGame();
+  }
+
+  void settingGame() {
     showDialog(
       context: context,
       builder: (context) {
-        return AlertDialog(
-          backgroundColor: AppColors.diaLogBackroundColor,
-          title: const Center(
-              child: Text(
-            'YOU WIN!',
-            style: TextStyle(color: Colors.white),
-          )),
-          actions: [
-            MaterialButton(
-              color: Colors.grey,
-              onPressed: () {
-                restartGame();
-                Navigator.of(context).pop();
-              },
-              child: Icon(Icons.refresh),
-            )
-          ],
-        );
+        return SettingDialog(matrix, createNewSquare);
       },
     );
   }
@@ -240,33 +238,37 @@ class _PlayScreenState extends State<PlayScreen> {
             ),
           ),
           // branding
-          Padding(
-            padding: const EdgeInsets.only(bottom: 0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.schedule_outlined,
-                    color: AppColors.IconButtonColor,
+          Container(
+            height: 40,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                    onPressed: settingGame,
+                    icon: Icon(
+                      Icons.settings,
+                      color: AppColors.IconButtonColor,
+                    ),
                   ),
-                ),
-                Text(
-                  "CREATED BY MINH PHAN",
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: AppColors.IconButtonColor,
+                  Text(
+                    "CREATED BY MINH PHAN",
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: AppColors.IconButtonColor,
+                    ),
                   ),
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.settings,
-                    color: AppColors.IconButtonColor,
+                  IconButton(
+                    onPressed: null,
+                    icon: Icon(
+                      null,
+                      //Icons.schedule_outlined,
+                      color: AppColors.IconButtonColor,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],

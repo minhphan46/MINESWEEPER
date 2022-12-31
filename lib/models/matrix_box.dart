@@ -32,6 +32,7 @@ class MatrixBox {
       ),
       growable: false,
     );
+    //print("${numOfRow} ${numOfCol} ${numberOfBoms}");
   }
 
   void initSquare() {
