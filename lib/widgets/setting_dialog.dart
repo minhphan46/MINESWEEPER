@@ -43,6 +43,8 @@ class _SettingDialogState extends State<SettingDialog> {
                 onPressed: () {
                   setState(() {
                     if (widget.cols > 4) widget.cols--;
+                    if (widget.bombs > (widget.cols * widget.cols - 10))
+                      widget.bombs = (widget.cols * widget.cols - 10);
                   });
                 },
                 icon: const Icon(
