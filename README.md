@@ -1,16 +1,7 @@
-# minesweeper
+# MINESWEEPER
 
-A new Flutter project.
+A GAME USING FLUTTER
 
-## Getting Started
+## This is the UI of the game
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![UIgame](https://user-images.githubusercontent.com/92455101/210162391-4260c737-0328-4540-83b4-c00b87eb4e64.png)
