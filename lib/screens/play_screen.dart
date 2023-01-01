@@ -217,25 +217,40 @@ class _PlayScreenState extends State<PlayScreen> {
                 if (matrix.isBomb(row, col)) {
                   return Bomb(
                     revealed: matrix.bombsRevealed,
+                    checkFlag: matrix.squares[row][col][2],
                     function: () {
-                      // player tapped the bomb, so player loses
+                      if (matrix.squares[row][col][2] == true) {
+                        matrix.squares[row][col][2] = false;
+                      } else {
+                        // player tapped the bomb, so player loses
+                        setState(() {
+                          matrix.bombsRevealed = true;
+                        });
+                        playerLose();
+                      }
+                    },
+                    longPress: () {
                       setState(() {
-                        matrix.bombsRevealed = true;
+                        matrix.changeFlag(row, col);
                       });
-                      playerLose();
                     },
                   );
                 } else {
                   return NumberBox(
                     child: matrix.Squares[row][col][0],
                     revealed: matrix.squares[row][col][1],
+                    checkFlag: matrix.squares[row][col][2],
                     function: () {
                       // revearl current box
                       setState(() {
                         matrix.revealBoxNumbers(row, col);
                         playerWon();
                       });
-                      // check winner
+                    },
+                    longPress: () {
+                      setState(() {
+                        matrix.changeFlag(row, col);
+                      });
                     },
                   );
                 }

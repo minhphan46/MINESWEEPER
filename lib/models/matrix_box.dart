@@ -8,7 +8,7 @@ class MatrixBox {
   int numOfCol = 9;
   late int numOfSquares;
   int numberOfBoms = 6;
-  // [number of bombs around, reverled = true / false]
+  // [number of bombs around, reverled = true / false, checkFag = true/false]
   List squares = []; // list of squares
 
   List get Squares => squares;
@@ -27,7 +27,7 @@ class MatrixBox {
       numOfRow,
       (i) => List.generate(
         numOfCol,
-        (j) => [0, false],
+        (j) => [0, false, false],
         growable: false,
       ),
       growable: false,
@@ -44,7 +44,7 @@ class MatrixBox {
     randomBomb();
     for (int i = 0; i < numOfRow; i++) {
       for (int j = 0; j < numOfCol; j++) {
-        squares[i][j] = [0, false];
+        squares[i][j] = [0, false, false];
       }
     }
     scanBombs();
@@ -65,7 +65,7 @@ class MatrixBox {
   void display() {
     for (int i = 0; i < numOfRow; i++) {
       for (int j = 0; j < numOfCol; j++) {
-        squares[i][j] = [0, false];
+        squares[i][j] = [0, false, false];
         print("moi o: ${squares[i][j][0]}");
       }
     }
@@ -82,6 +82,11 @@ class MatrixBox {
 
   // event when click the box
   void revealBoxNumbers(int row, int col) {
+    if (squares[row][col][2] == true) {
+      squares[row][col][2] = false;
+      return;
+    }
+
     // reveal current box if it is a number: 1,2,3 ...
     if (squares[row][col][0] != 0) {
       squares[row][col][1] = true;
@@ -179,5 +184,11 @@ class MatrixBox {
     }
     if (unrevealedBoxes == bombLocations.length) return true;
     return false;
+  }
+
+  void changeFlag(int row, int col) {
+    if (squares[row][col][1] == false) {
+      squares[row][col][2] = !squares[row][col][2];
+    }
   }
 }
